@@ -28,8 +28,10 @@ void loop() {
     if(distance==-1) {
       lcd.print("error");
     }
-    lcd.print(((String)distance)+"mm");
+    lcd.print((String)distance+"MM "+(String)(distance/10.0)+"CM");
+    lcd.setCursor(0,1);
+    lcd.print((String)(distance/1000.0)+"M");
     vl53.clearInterrupt();
-    delay(1000);
+    delay(500);
   }
 }
