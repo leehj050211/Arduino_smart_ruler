@@ -4,6 +4,7 @@
 #define XSHUT_PIN 3
 Adafruit_VL53L1X vl53 = Adafruit_VL53L1X(XSHUT_PIN, IRQ_PIN);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
+int piezo = 11, count = 0;
 
 void setup() {
   lcd.init();
@@ -31,6 +32,15 @@ void loop() {
     lcd.print((String)distance+"MM "+(String)(distance/10.0)+"CM");
     lcd.setCursor(0,1);
     lcd.print((String)(distance/1000.0)+"M");
+    count++;
+    if(count>10){
+      count=0;
+      tone(piezo, 784);
+      delay(500);
+      noTone(piezo);
+      lcd.print(" Complete");
+      delay(2000);
+    }
     vl53.clearInterrupt();
     delay(500);
   }
